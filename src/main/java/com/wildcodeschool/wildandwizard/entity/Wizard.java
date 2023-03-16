@@ -1,9 +1,14 @@
 package com.wildcodeschool.wildandwizard.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import java.sql.Date;
 
 @Entity
@@ -19,7 +24,32 @@ public class Wizard {
     private String biography;
     private boolean muggle;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "school_id")
+    private School school;
+
     public Wizard() {
+    }
+
+    public Wizard(String firstName, String lastName, Date birthday, String birthPlace, String biography,boolean muggle, School school) {
+        
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.birthPlace = birthPlace;
+        this.biography = biography;
+        this.muggle = muggle;
+        this.school = school;
+    }
+
+
+
+    public School getSchool(){
+        return school;
+    }
+
+    public void setSchool(School school){
+        this.school = school;
     }
 
     public Long getId() {
